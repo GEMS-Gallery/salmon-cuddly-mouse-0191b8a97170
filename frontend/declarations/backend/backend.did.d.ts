@@ -9,7 +9,7 @@ export interface TaxpayerRecord {
   'firstName' : string,
 }
 export interface _SERVICE {
-  'addTaxpayer' : ActorMethod<[string, string, string, string], undefined>,
+  'addTaxpayer' : ActorMethod<[string, string, string, string], TaxpayerRecord>,
   'deleteTaxpayer' : ActorMethod<[string], boolean>,
   'getTaxpayer' : ActorMethod<[string], [] | [TaxpayerRecord]>,
   'updateTaxpayer' : ActorMethod<[string, string, string, string], boolean>,

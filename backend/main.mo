@@ -15,7 +15,7 @@ actor {
 
   let taxpayers = HashMap.HashMap<Text, TaxpayerRecord>(0, Text.equal, Text.hash);
 
-  public func addTaxpayer(tid: Text, firstName: Text, lastName: Text, address: Text) : async () {
+  public func addTaxpayer(tid: Text, firstName: Text, lastName: Text, address: Text) : async TaxpayerRecord {
     let record: TaxpayerRecord = {
       tid = tid;
       firstName = firstName;
@@ -24,6 +24,7 @@ actor {
     };
     taxpayers.put(tid, record);
     Debug.print("Added taxpayer with TID: " # tid);
+    record
   };
 
   public query func getTaxpayer(tid: Text) : async ?TaxpayerRecord {

@@ -6,7 +6,7 @@ type TaxpayerRecord =
    tid: text;
  };
 service : {
-  addTaxpayer: (text, text, text, text) -> ();
+  addTaxpayer: (text, text, text, text) -> (TaxpayerRecord);
   deleteTaxpayer: (text) -> (bool);
   getTaxpayer: (text) -> (opt TaxpayerRecord) query;
   updateTaxpayer: (text, text, text, text) -> (bool);

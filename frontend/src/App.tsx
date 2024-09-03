@@ -19,7 +19,8 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await backend.addTaxpayer(tid, firstName, lastName, address);
+      const newTaxpayer = await backend.addTaxpayer(tid, firstName, lastName, address);
+      setTaxpayer(newTaxpayer);
       setMessage('Taxpayer added successfully');
       clearForm();
     } catch (error) {
@@ -30,8 +31,8 @@ function App() {
   const handleGet = async () => {
     try {
       const result = await backend.getTaxpayer(tid);
-      if (result.length > 0) {
-        setTaxpayer(result[0]);
+      if ('Ok' in result) {
+        setTaxpayer(result.Ok);
         setMessage('Taxpayer found');
       } else {
         setTaxpayer(null);
@@ -46,7 +47,12 @@ function App() {
     e.preventDefault();
     try {
       const result = await backend.updateTaxpayer(tid, firstName, lastName, address);
-      setMessage(result ? 'Taxpayer updated successfully' : 'Taxpayer not found');
+      if (result) {
+        setTaxpayer({ tid, firstName, lastName, address });
+        setMessage('Taxpayer updated successfully');
+      } else {
+        setMessage('Taxpayer not found');
+      }
     } catch (error) {
       setMessage(`Error: ${error}`);
     }
@@ -55,8 +61,13 @@ function App() {
   const handleDelete = async () => {
     try {
       const result = await backend.deleteTaxpayer(tid);
-      setMessage(result ? 'Taxpayer deleted successfully' : 'Taxpayer not found');
-      clearForm();
+      if (result) {
+        setMessage('Taxpayer deleted successfully');
+        setTaxpayer(null);
+        clearForm();
+      } else {
+        setMessage('Taxpayer not found');
+      }
     } catch (error) {
       setMessage(`Error: ${error}`);
     }
@@ -67,7 +78,6 @@ function App() {
     setFirstName('');
     setLastName('');
     setAddress('');
-    setTaxpayer(null);
   };
 
   return (
