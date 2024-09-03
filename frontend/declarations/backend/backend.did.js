@@ -1,4 +1,19 @@
 export const idlFactory = ({ IDL }) => {
-  return IDL.Service({ 'greet' : IDL.Func([IDL.Text], [IDL.Text], []) });
+  const TaxpayerRecord = IDL.Record({
+    'tid' : IDL.Text,
+    'address' : IDL.Text,
+    'lastName' : IDL.Text,
+    'firstName' : IDL.Text,
+  });
+  return IDL.Service({
+    'addTaxpayer' : IDL.Func([IDL.Text, IDL.Text, IDL.Text, IDL.Text], [], []),
+    'deleteTaxpayer' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'getTaxpayer' : IDL.Func([IDL.Text], [IDL.Opt(TaxpayerRecord)], ['query']),
+    'updateTaxpayer' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+        [IDL.Bool],
+        [],
+      ),
+  });
 };
 export const init = ({ IDL }) => { return []; };

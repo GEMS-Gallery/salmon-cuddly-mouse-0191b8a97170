@@ -1,3 +1,13 @@
+type TaxpayerRecord = 
+ record {
+   address: text;
+   firstName: text;
+   lastName: text;
+   tid: text;
+ };
 service : {
-  greet: (text) -> (text);
+  addTaxpayer: (text, text, text, text) -> ();
+  deleteTaxpayer: (text) -> (bool);
+  getTaxpayer: (text) -> (opt TaxpayerRecord) query;
+  updateTaxpayer: (text, text, text, text) -> (bool);
 }
